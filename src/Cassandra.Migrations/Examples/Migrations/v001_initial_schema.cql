@@ -1,0 +1,1 @@
+CREATE TYPE IF NOT EXISTS orders_keyspace.product(uuid uuid, name text, price float);

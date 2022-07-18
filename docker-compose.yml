@@ -1,0 +1,27 @@
+version: "3.9"
+
+services: 
+  cassandra_migrations:
+    build:
+      context: .
+      dockerfile: src/Cassandra.Migrations/Dockerfile
+      target: final
+    command: migrate -h cassandra -k orders_keyspace -s .
+    volumes:
+      - .:/src/Cassandra.Migrations/Examples/Migrations/
+    depends_on:
+      - cassandra
+  
+  cassandra:
+    image: cassandra
+    env_file:
+      - config/cassandra/cassandra.env
+    ports:
+      - "7199:7199" # JMX
+      - "7000:7000" # cluster communication
+      - "7001:7001" # cluster communication (SSL)
+      - "9042:9042" # native protocol clients
+      - "9160:9160" # thrift clients
+    volumes:
+      - ./data/cassandra:/var/lib/cassandra
+  

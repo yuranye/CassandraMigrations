@@ -1,0 +1,9 @@
+### DotnetCore ###
+# .NET Core build folders
+bin/
+obj/
+# .idea
+.idea/
+
+### Apache Cassandra ###
+data/

@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS orders (uuid uuid PRIMARY KEY, description text, user uuid, products list<frozen<orders_keyspace.product>>);
