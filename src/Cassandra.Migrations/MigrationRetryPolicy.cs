@@ -1,4 +1,4 @@
-using Cassandra;
+namespace Cassandra.Migrations;
 
 public class MigrationsRetryPolicy : IRetryPolicy
 {

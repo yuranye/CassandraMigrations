@@ -16,38 +16,22 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="..\..\examples\migrations\v001_initial_schema.cql">
+      <Content Include="..\..\examples\migrations\v001_initial_schema.cql">
         <Link>migrations\v001_initial_schema.cql</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Include="..\..\examples\migrations\v002_add_root_orders_table.cql">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\..\examples\migrations\v002_add_root_orders_table.cql">
         <Link>migrations\v002_add_root_orders_table.cql</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Include="..\..\examples\migrations\v003_some_bad_migration.cql">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\..\examples\migrations\v003_some_bad_migration.cql">
         <Link>migrations\v003_some_bad_migration.cql</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Include="..\..\examples\migrations\v004_some_ok_statement.cql">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\..\examples\migrations\v004_some_ok_statement.cql">
         <Link>migrations\v004_some_ok_statement.cql</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Include="bin\Debug\net6.0\v001_initial_schema.cql">
-        <Link>migrations\v001_initial_schema.cql</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Include="bin\Debug\net6.0\v002_add_root_orders_table.cql">
-        <Link>migrations\v002_add_root_orders_table.cql</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Include="bin\Debug\net6.0\v003_some_bad_migration.cql">
-        <Link>migrations\v003_some_bad_migration.cql</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Include="bin\Debug\net6.0\v004_some_ok_statement.cql">
-        <Link>migrations\v004_some_ok_statement.cql</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>
