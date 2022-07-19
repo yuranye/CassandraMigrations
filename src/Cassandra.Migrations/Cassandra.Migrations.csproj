@@ -9,15 +9,43 @@
 
     <ItemGroup>
       <PackageReference Include="CassandraCSharpDriver" Version="3.18.0" />
+      <PackageReference Include="Polly" Version="7.2.3" />
       <PackageReference Include="Spectre.Console" Version="0.44.1-preview.0.29" />
       <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+      <PackageReference Include="System.Linq.Async" Version="6.0.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Migrations\Examples\v001_initial_schema.cql">
+      <None Include="..\..\examples\migrations\v001_initial_schema.cql">
+        <Link>migrations\v001_initial_schema.cql</Link>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Migrations\Examples\v002_add_root_orders_table.cql">
+      <None Include="..\..\examples\migrations\v002_add_root_orders_table.cql">
+        <Link>migrations\v002_add_root_orders_table.cql</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Include="..\..\examples\migrations\v003_some_bad_migration.cql">
+        <Link>migrations\v003_some_bad_migration.cql</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Include="..\..\examples\migrations\v004_some_ok_statement.cql">
+        <Link>migrations\v004_some_ok_statement.cql</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Include="bin\Debug\net6.0\v001_initial_schema.cql">
+        <Link>migrations\v001_initial_schema.cql</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Include="bin\Debug\net6.0\v002_add_root_orders_table.cql">
+        <Link>migrations\v002_add_root_orders_table.cql</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Include="bin\Debug\net6.0\v003_some_bad_migration.cql">
+        <Link>migrations\v003_some_bad_migration.cql</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Include="bin\Debug\net6.0\v004_some_ok_statement.cql">
+        <Link>migrations\v004_some_ok_statement.cql</Link>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
