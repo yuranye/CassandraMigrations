@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: src/Cassandra.Migrations/Dockerfile
       target: final
-    command: migrate -h cassandra -k orders_keyspace -s ./scripts
+    command: migrate -h cassandra -k orders_keyspace -s scripts --port 9042 --force_keyspace
     volumes:
       - ./examples/migrations/:/app/scripts
     depends_on:
