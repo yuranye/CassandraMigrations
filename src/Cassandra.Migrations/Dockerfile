@@ -13,4 +13,13 @@ RUN dotnet publish "src/Cassandra.Migrations/Cassandra.Migrations.csproj" -c Rel
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Cassandra.Migrations.dll"]
+
+COPY build/. .
+
+#install cqlsh
+RUN apt-get update && apt-get install -y python3-pip
+RUN pip install -U cqlsh
+
+RUN chmod +x ./docker-entrypoint.sh
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
