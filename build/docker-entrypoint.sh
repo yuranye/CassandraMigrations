@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -7,8 +7,16 @@ port="$(getopt -q -u -l "port:" "$@" | grep -oP "(?<= --port ).*(?= --.*)" || pr
 
 echo "Waiting for cassandra to be ready..."
 
-while ! cqlsh "$host" "$port" -e 'describe cluster'; do
-  sleep 3
+max_retries=5
+
+for ((i = 1; i <= max_retries; i++)); do
+  if ! cqlsh "$host" "$port" -e 'describe cluster'; then
+    echo "Retrying: $i"
+    sleep 5
+  else
+    exec dotnet Cassandra.Migrations.dll "$@"
+  fi
 done
 
-exec dotnet Cassandra.Migrations.dll "$@"
+echo "All cassandra connection retries failed"
+exit 1
