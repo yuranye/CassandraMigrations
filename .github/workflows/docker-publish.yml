@@ -83,7 +83,8 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ (startsWith(github.ref, 'refs/tags/v') && '${{steps.meta.outputs.tags}}') || '${{steps.previoustag.outputs.tag-steps.commit.outputs.short}}' }}    
+          #tags: ${{ (startsWith(github.ref, 'refs/tags/v') && '${{steps.meta.outputs.tags}}') || ${{steps.previoustag.outputs.tag}}-steps.commit.outputs.short}} }}    
+          tags: ${{ (startsWith(github.ref, 'refs/tags/v') && '${{steps.meta.outputs.tags}}') || ${{steps.commit.outputs.short}} }}    
       #  ${{steps.previoustag.outputs.tag}}-${{steps.commit.outputs.short}}
           labels: ${{ steps.meta.outputs.labels }}
           file: ./src/Cassandra.Migrations/Dockerfile
