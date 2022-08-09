@@ -65,17 +65,21 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      # Build Docker image on PR with Buildx
-      # https://github.com/docker/build-push-action
-      - name: Build Docker image
-        if: ${{ github.event_name == 'pull_request' }}
-        id: build-docker-image
-        uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
+      - name: Get previous tag
+        #if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
         with:
-          context: .
-          tags: ${{ github.sha }}
-          labels: ${{ steps.meta.outputs.labels }}
-          file: ./src/Cassandra.Migrations/Dockerfile
+          fallback: v0.0.1 # Optional fallback tag to use when no tag can be found
+
+      - name: Add SHORT_SHA env property with commit short sha
+        #if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+        
+      - name: Build hash based tag version
+        #if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        run: |
+          echo "DOCKER_TAG=`${{steps.previoustag.outputs.tag}}:${SHORT_SHA}`" >> $GITHUB_ENV
       
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
@@ -85,7 +89,7 @@ jobs:
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
           context: .
-          push: true
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           file: ./src/Cassandra.Migrations/Dockerfile
