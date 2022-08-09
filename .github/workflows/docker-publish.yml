@@ -66,31 +66,33 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Get previous tag
-        #if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         id: previoustag
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
         with:
           fallback: v0.0.1 # Optional fallback tag to use when no tag can be found
-          
-      - id: commit
-        #if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+
+      - name: Get commit hash
+        id: commit
         uses: pr-mpt/actions-commit-hash@v1
-        
-#      - name: Build hash based tag version
-#        #if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
-#        id: docker_tag
-#        run: echo '::set-output name=DOCKER_TAG::${{steps.previoustag.outputs.tag}}:${{steps.commit.outputs.short}}'
       
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
-        #if: ${{ github.event_name != 'pull_request' }}
         id: build-and-push
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{steps.previoustag.outputs.tag}}-${{steps.commit.outputs.short}}
+          tags: >
+            echo ${{ github.ref }}
+            ref='refs/tags/v'
+            if [[ ${{ github.ref }} == *${ref}* ]]; then
+              v=$(echo ${{ github.ref }} | cut -d'/' -f3)
+              echo "${v}"
+            else
+              echo "${{steps.previoustag.outputs.tag}}-${{steps.commit.outputs.short}}"
+            fi
+            ${{steps.previoustag.outputs.tag}}-${{steps.commit.outputs.short}}
           labels: ${{ steps.meta.outputs.labels }}
           file: ./src/Cassandra.Migrations/Dockerfile
 
