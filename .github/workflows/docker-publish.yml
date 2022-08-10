@@ -82,8 +82,9 @@ jobs:
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ (startsWith(github.ref, 'refs/tags/v') && steps.meta.outputs.tags) || format('{0}-{1}', steps.previoustag.outputs.tag, steps.commit.outputs.short)  }}    
+          push: true
+      #    push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ ${{ (startsWith(github.ref, 'refs/tags/v') && steps.meta.outputs.tags) || format('{0}-{1}', steps.previoustag.outputs.tag, steps.commit.outputs.short)  }}:1 }}    
           labels: ${{ steps.meta.outputs.labels }}
           file: ./src/Cassandra.Migrations/Dockerfile
 
